@@ -1,0 +1,137 @@
+=================================================================================
+
+ HaTen2: Hadoop Tensor Method for 2 decompositions
+ Authors: Inah Jeon, Evangelos E. Papalexakis, Christos Faloutsos, Lee Sael, U Kang
+ Version: 1.0
+ Date: Oct 5, 2015
+ Main Contact: U Kang (ukang@snu.ac.kr)
+
+=================================================================================
+
+HaTen2 is a scalable distributed algorithm of tensor decomposition for large scale
+tensors running on the MapReduce platform. HaTen supports 2 tensor decompositions: 
+- PARAFAC decomposition (+ nonnegative version, PARAFACNN)
+- Tucker decomposition (+ nonnegative version, TuckerNN)
+
+For demo, type make.
+
+1) input tensor format
+HaTen2 uses sparse tensor format. The columns except the last column have indices of each
+mode, and the last column has the value of specified position.
+
+Each column is separated by a tab and index of tensor begins with the number 1, not 0.
+
+**Example of input tensor format
+test.tensor:
+1	1	1	0.1
+2	2	2	0.2
+3	3	3	0.3
+5	4	3	0.4
+
+2) execute
+To run, use the 'run_parafac.sh', 'run_tucker.sh', 'run_parafacnn.sh', and 'run_tuckernn.sh'.
+
+1. HaTen2-PARAFAC, HaTen2-PARAFACNN
+./run_parafac(nn).sh [dim_1:...:dim_N (tensor)] [rank] [# of reducers] [max iteration] 
+[tensor path] [output path] [log file]
+- dim_1:...:dim_N (tensor) : the dimensionality of the input tensor
+- rank : the desired rank of PARAFAC decomposition
+- # of reducers: the number of reducers your hadoop cluster has
+- max iteration : the number of maximum iterations for PARAFAC decomposition
+- tensor path : the path of the input tensor in hdfs
+- output path : the output path in hdfs
+- log file : log file including running time
+
+2. HaTen2-Tucker, HaTen2-TuckerNN
+./run_tucker(nn).sh [dim_1:...:dim_N (tensor)] [dim_1:...:dim_N (core tensor)] 
+[# of reducers] [max iteration] [tensor path] [output path] [log file]
+- dim_1:...:dim_N (tensor) : the dimensionality of the input tensor
+- dim_1:...:dim_N (core tensor) : the dimensionality of the core tensor
+- # of reducers: the number of reducers your hadoop cluster has
+- max iteration : the number of maximum iterations for Tucker decomposition
+- tensor path : the path of the input tensor in hdfs
+- output path : the output path in hdfs
+- log file : log file including running time
+
+
+3) output
+All outputs of HaTen2 are stored in HDFS.
+
+1. HaTen2-PARAFAC, HaTen2-PARAFACNN
+The output is stored in output path specified as a parameter.
+In the output path, there are N * R of sub-folders (N: # of modes, R : rank)
+for factor matrices.
+The factor matrices are stored in column-wise.
+For example, r-th column of the n-th factor matrix is stored in 'n/n_r'
+
+[parafac_output_path/tensor_factor]
+	[1/1_1] [1/1_2] ... [1/1_R]
+	[2/2_1] [2/2_2] ... [2/2_R]
+	...
+	[N/N_1] [N/N_2] ... [N/N_R]
+
+[parafac_output_path/lambda]
+
+**Example of the result from the input tensor 'test.tensor', PARAFAC with rank = 2
+- columns of 1st factor matrix are in 'parafac_output_path/tensor_factor/1/1_1',
+'parafac_output_path/tensor_factor/1/1_2'. 
+
+1_1:
+1	1	1	1.0
+1_2:
+1	1	2	1.0
+
+The first number is the mode corresponding to factor matrix.
+The next two numbers are indices of factor matrix, 
+and the last number is the value of specified position.
+
+- Weight vector lambda is stored in 'parafac_output_path/lambda'. 
+
+lambda:
+1	0.6
+2	0.5
+
+The first number is the corresponding column in factor matrix,
+and the last number is the weight of that column vector.
+	
+
+2. HaTen2-Tucker, HaTen2-TuckerNN
+The output is stored in output path specified as a parameter.
+In the output path, there are (sum of core tensor dimensionalities,
+R_1+R_2+...+R_N for N-dimensional tensor) of sub-folders for factor matrices 
+and a sub-folder for core tensor.
+The factor matrices are stored in column-wise.
+For example, r-th column of the n-th factor matrix a is stored in 'n/n_r'
+
+[tucker_output_path/tensor_factor]
+	[1/1_1] [1/1_2] ... [1/1_R_1]
+	[2/2_1] [2/2_2] ... [2/2_R_2]
+	...
+	[N/N_1] [N/N_2] ... [N/N_R_N]
+
+[tucker_output_path/core]
+	
+
+**Example of the result from the input tensor 'test.tensor'
+Tucker with core tensor of size R_1 = 2, R_2 = 2, R_3 =2)
+- columns of 1st factor matrix are in 'tucker_output_path/tensor_factor/1/1_1',
+'tucker_output_path/tensor_factor/1/1_2'. 
+
+1_1: 
+1	1	1	1.0
+1_2:
+1	1	2	1.0
+
+The first number is the mode corresponding to factor matrix.
+The next two numbers are indices of factor matrix,
+and the last number is the value of specified position.
+
+- core tensor is stored in 'tucker_output_path/core'. 
+
+core:
+1	1	1	0.6
+2	2	2	0.5
+
+The numbers except the last number are indices of core tensor,
+and the last number is the value of specified position.
+	
