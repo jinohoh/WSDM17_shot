@@ -20,7 +20,7 @@ CXX				= g++
 CXXFLAGS		= -std=c++11 -g -fmessage-length=0 -c -fopenmp -msse3 -mavx -I${INCLUDE}/ARPACKpp -Ofast -ffast-math
 LDFLAGS			= -fopenmp
 DEP				= $(LIB)/libarpack.a $(LIB)/libopenblas.a
-LDLIBS			= -lgfortran -lm
+LDLIBS			= -lgfortran -lm 
 
 
 ## Binaries

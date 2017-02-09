@@ -1,0 +1,12 @@
+*.[oad]
+*.mk
+*.swp
+*.pyc
+*\._*
+*/syn*
+*/*m*.t*
+bin/*
+reproduce/out/*
+src/cscope.files
+src/cscope.out
+src/tags
