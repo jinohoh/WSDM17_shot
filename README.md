@@ -22,6 +22,7 @@ We encourage you to cite our paper if you have used our implementation in your w
 
 ##Requirements
 - C++
+- gFortran
 - Supports AVX/SSE instructions ([web page](https://software.intel.com/sites/landingpage/IntrinsicsGuide/))
 - (Optional) The followings are used for evaluation, but are not mandatory to run S-HOT.
   * Python 2.7

@@ -33,7 +33,7 @@ $(TARGET): $(OBJECTS) $(DEP)
 $(LIB)/libopenblas.a:
 	cd $(LIB) && sh install-openblas.sh
 
-$(LIB)/libarpack.a:
+$(LIB)/libarpack.a: $(LIB)/libopenblas.a
 	cd $(LIB) && sh install-arpack-ng.sh
 
 # Public rules
