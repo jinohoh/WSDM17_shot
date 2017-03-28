@@ -1,12 +1,13 @@
-#S-HOT: Scalable High-Order Tucker Decomposition (WSDM 2017)
+# S-HOT: Scalable High-Order Tucker Decomposition (WSDM 2017)
 Jinoh Oh, Kijung Shin, Evangelos E. Papalexakis, Christos Faloutsos, and Hwanjo Yu
 
-##Webpage
+## Webpage
 Visit our official [webpage](http://dm.postech.ac.kr/shot/)!
 
-##Citing S-HOT
+## Citing S-HOT
 We encourage you to cite our paper if you have used our implementation in your work. You can use the following BibTex citation:
-><dl><pre>
+>
+<dl><pre>
 @inproceedings{Oh:2017:SHOT,
   author = {Jinoh Oh and Kijung Shin and Evangelos E. Papalexakis and Christos Faloutsos and Hwanjo Yu},
   title = {S-HOT: Scalable High-Order Tucker Decomposition},
@@ -20,7 +21,7 @@ We encourage you to cite our paper if you have used our implementation in your w
 }
 </pre></dl>
 
-##Requirements
+## Requirements
 - C++
 - gFortran
 - Supports AVX/SSE instructions ([web page](https://software.intel.com/sites/landingpage/IntrinsicsGuide/))
@@ -30,14 +31,15 @@ We encourage you to cite our paper if you have used our implementation in your w
   * MATLAB is used for evaluation 
   * Tensor Toolbox 2.6 ([web page](http://www.sandia.gov/~tgkolda/TensorToolbox/index-2.6.html))
 
-##How to run
-###Input file format
+## How to run
+### Input file format
 The input file should be a list of non-zero entries where a line corresponds to a non-zero entry and attribute values for the non-zero entry are white-space separated. For example,
 > `<attribute_1> <attribute_2> <attribute_3> ... <attribute_n> <target_value>`
 
 Note that each attribute value should be integer, but `<target_value>` can be float. The following is a typical example for a 4-order tensor.
 
-><dl><pre>
+>
+<dl><pre>
 5395 9458 4819 5770 0.773400
 9769 4765 3811 5978 0.626600
 3460 8639 2865 6085 0.776800
@@ -59,10 +61,10 @@ Note that each attribute value should be integer, but `<target_value>` can be fl
 8234 9134 4184 7925 0.086500
 9866 9009 9983 2927 0.787400</pre></dl>
 
-###Test your own tensor
+### Test your own tensor
 Run `<install_path>/bin/Shot --size-mode <int> --size-rank <string> --iteration <int> <tensor_path> <model_path>` in bash shell. The detailed configurations are presented in the `Configuration` section.
 
-###Reproduce the reported results
+### Reproduce the reported results
 1. Type `cd <installpath>/reproduce` in bash shell.
 2. Run `sudo python run.py` in bash shell.
 3. Check `<installpath>/reproduce/fig/`
@@ -72,7 +74,7 @@ Run `<install_path>/bin/Shot --size-mode <int> --size-rank <string> --iteration 
 * NOTE3: In our machine setting, reproducing whole results takes 1-2 days.
 * WARNING: I strongly encourage to turn-off your swap space by `sudo swapoff -a`. Allowing swap space could slightly enhance scalability of MATLAB-based implementations but definitely takes enourmous time while does not change the overall trend.
 
-##Configuration 
+## Configuration 
 1. `--plain`: run plain S-HOT implementation.
 2. `--scan`: run scan-optimized S-HOT implementation (Default)
 3. `--size-mode <int>`: the size of an input tensor.
