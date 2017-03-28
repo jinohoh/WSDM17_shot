@@ -6,7 +6,8 @@ Visit our official [webpage](http://dm.postech.ac.kr/shot/)!
 
 ## Citing S-HOT
 We encourage you to cite our paper if you have used our implementation in your work. You can use the following BibTex citation:
-><dl><pre>
+>
+<dl><pre>
 @inproceedings{Oh:2017:SHOT,
   author = {Jinoh Oh and Kijung Shin and Evangelos E. Papalexakis and Christos Faloutsos and Hwanjo Yu},
   title = {S-HOT: Scalable High-Order Tucker Decomposition},
@@ -37,7 +38,8 @@ The input file should be a list of non-zero entries where a line corresponds to 
 
 Note that each attribute value should be integer, but `<target_value>` can be float. The following is a typical example for a 4-order tensor.
 
-> {:<dl><pre>
+>
+<dl><pre>
 5395 9458 4819 5770 0.773400
 9769 4765 3811 5978 0.626600
 3460 8639 2865 6085 0.776800
